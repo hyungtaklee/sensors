@@ -65,17 +65,13 @@ int main(void)
 
 		distance = time_diff_sec * 17000;
 
-		printf("distance: %.3lf\n", distance);
+		printf("distance: %lf\n", distance);
 	
 	
 		if (curl) {
-			int decimal, sign;
-			char *dist_str;
-	
-			dist_str = ecvt(distance, 3, &decimal, &sign);
-
-			memcpy(post, "distance=", strlen("distance=") + 1);
-			strcat(post, dist_str );
+			char post[256];	
+			
+			sprintf(post, "distance=%.3lf", distance);
 
 			printf("DEBUG: post: %s\n", post);
 			
