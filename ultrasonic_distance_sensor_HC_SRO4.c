@@ -5,10 +5,6 @@
 #define TRIG_PIN 4
 #define ECHO_PIN 5
 
-#define MAX_DIST_CM 300
-
-double distant_cm(int duration);
-
 int main(void)
 {
 	long dist, duration;
