@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	double time_diff_sec;	
 	double distance;
 
-	struct sensor_data data;
+	struct sensor_data data = {"distance", 0.0};
 
 	/* check argument */
 	if (argc != 2) {
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 		data.value = time_diff_sec * 17000;
 		printf("distance: %.3lf\n", data.value);
 
-		write(sockfd, data, sizeof(data));
+		write(sockfd, &data, sizeof(data));
 
 		delay(300);
 	}
