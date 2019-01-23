@@ -2,6 +2,9 @@
 #include <wiringPi.h>
 #include <time.h>
 #include <stdlib.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 
 #define TRIG_PIN 4
 #define ECHO_PIN 5

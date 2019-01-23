@@ -21,9 +21,6 @@ int main(int argc, char **argv)
 {
 	int listenfd, connfd;
 	struct sockaddr_in servaddr, clientaddr;
-	char buff[BUFFLEN];
-	int err;
-	time_t ticks;
 
 	int clientlen;
 	char tempip[20];
