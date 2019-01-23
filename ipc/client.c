@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <string.h>
 
 #define TRIG_PIN 4
 #define ECHO_PIN 5
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(atoi(argv[1]));
 	if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0) {
-		printf("error: inet_pton error for %s\n", 127.0.0.1);
+		printf("error: inet_pton error for %s\n", "127.0.0.1");
 		return -1;
 	}
 
