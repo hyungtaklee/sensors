@@ -63,11 +63,6 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if (connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr))< 0){
-		printf("error: connect error\n");
-		return -1;
-	}
-
 	/* initialize sensor */
 	pinMode(TRIG_PIN, OUTPUT);
 	pinMode(ECHO_PIN, INPUT);
@@ -78,6 +73,12 @@ int main(int argc, char **argv)
 	printf("Start!\n");
 
 	for (;;) {
+		if (connect(sockfd, (struct sockaddr *)&servaddr,
+		sizeof(servaddr)) < 0) {
+			printf("error: connect error\n");
+			return -1;
+		}
+
 		digitalWrite(TRIG_PIN, 0);
 		delay(500); // write LOW for 500ms
 
