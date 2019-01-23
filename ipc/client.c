@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(atoi(argv[1]));
-	if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0) {
-		printf("error: inet_pton error for %s\n", argv[1]);
+	if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0) {
+		printf("error: inet_pton error for %s\n", 127.0.0.1);
 		return -1;
 	}
 
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 					/ CLOCKS_PER_SEC;
 		
 		data.value = time_diff_sec * 17000;
-		printf("distance: %.3lf\n", data_value);
+		printf("distance: %.3lf\n", data.value);
 
 		write(sockfd, data, sizeof(data));
 
