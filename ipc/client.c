@@ -50,18 +50,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-		printf("error: socket error\n");
-		return -1;
-	}
 
-	memset(&servaddr, 0, sizeof(servaddr));
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(atoi(argv[1]));
-	if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0) {
-		printf("error: inet_pton error for %s\n", "127.0.0.1");
-		return -1;
-	}
 
 	/* initialize sensor */
 	pinMode(TRIG_PIN, OUTPUT);
@@ -73,12 +62,23 @@ int main(int argc, char **argv)
 	printf("Start!\n");
 
 	for (;;) {
-		if (connect(sockfd, (struct sockaddr *)&servaddr,
-		sizeof(servaddr)) < 0) {
-			printf("error: connect error\n");
+		if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+			printf("error: socket error\n");
 			return -1;
 		}
-
+		memset(&servaddr, 0, sizeof(servaddr));
+		servaddr.sin_family = AF_INET;
+		servaddr.sin_port = htons(atoi(argv[1]));
+		if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0) {
+			printf("error: inet_pton error for %s\n", "127.0.0.1");
+			return -1;
+		}
+	
+		if (connect(sockfd, (struct sockaddr *)&servaddr,
+			sizeof(servaddr)) < 0) {
+				printf("error: connect error\n");
+				return -1;
+		}
 		digitalWrite(TRIG_PIN, 0);
 		delay(500); // write LOW for 500ms
 
@@ -100,8 +100,8 @@ int main(int argc, char **argv)
 		printf("distance: %.3lf\n", data.value);
 
 		write(sockfd, &data, sizeof(data));
-
-		delay(300);
+		close(sockfd);
+		delay(1000);
 	}
 
 	return 0;
