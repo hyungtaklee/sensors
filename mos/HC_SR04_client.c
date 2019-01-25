@@ -25,8 +25,6 @@ static volatile int run = 1;
 
 void sig_handler(int s);
 void connect_callback(struct mosquitto *mosq, void *obj, int result);
-void message_callback(struct mosquitto *mosq, void *obj,
-		const struct mosquitto_message *message);
 
 int main(void)
 {
@@ -69,7 +67,6 @@ int main(void)
 
 	if (mosq) {
 		mosquitto_connect_callback_set(mosq, connect_callback);
-		mosquitto_message_callback_set(mosq, message_callback);
 
 	while (run) {
 		digitalWrite(TRIG_PIN, 0);
@@ -115,3 +112,9 @@ void sig_handler(int s)
 {
 	run = 0;
 }
+
+void connect_callback(struct mosquitto *mosq, void *obj, int result)
+{
+	printf("connect callback, rc=%d\n", result);
+}
+
