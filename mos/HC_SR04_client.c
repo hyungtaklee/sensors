@@ -102,10 +102,9 @@ int main(void)
 		delay(300);
 	} /* end of while (run) */
 	} /* end of if (mosq) */
-	mosquitto_destroy(mosq);
 
-	else { /* if (!mosq) */
-		printf("error: mosq initialization error\n");
+	if (mosq) {
+		mosquitto_destroy(mosq);
 	}
 	digitalWrite(TRIG_PIN, 0);
 
